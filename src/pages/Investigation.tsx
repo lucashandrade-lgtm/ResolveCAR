@@ -298,7 +298,7 @@ function Fact({ label, value }: { label: string; value: string }) {
 
 function SummaryGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <details className="group rounded-lg border border-slate-200 bg-gov-gray" open>
+    <details className="group rounded-lg border border-slate-200 bg-gov-gray">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
         <h3 className="text-sm font-semibold uppercase text-gov-green">{title}</h3>
         <ChevronDown className="text-slate-500 transition group-open:rotate-180" size={18} />
