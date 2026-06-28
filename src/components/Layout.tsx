@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { BarChart3, Bell, BookOpenCheck, Building2, FileText, Home, MessageSquareText, Search, Settings, ShieldCheck } from "lucide-react";
+import { BarChart3, Bell, BookOpenCheck, Building2, Home, MessageSquareText, Search, Settings } from "lucide-react";
 import { GlossaryDrawer } from "./GlossaryDrawer";
 import { ToastViewport } from "./ToastViewport";
 
@@ -12,11 +12,9 @@ type LayoutProps = {
 export function Layout({ children, breadcrumb }: LayoutProps) {
   const navItems = [
     { to: "/", label: "Dashboard", icon: Home },
-    { to: "/", label: "Processos", icon: FileText },
-    { to: "/", label: "Central de Investigacao", icon: ShieldCheck },
     { to: "/catalogo-regras", label: "Catalogo de Regras", icon: BookOpenCheck },
     { to: "/comunicacoes", label: "Comunicacoes", icon: MessageSquareText },
-    { to: "/comunicacoes", label: "Relatorios", icon: BarChart3 },
+    { to: "/relatorios", label: "Relatorios", icon: BarChart3 },
     { to: "/", label: "Configuracoes", icon: Settings }
   ];
 

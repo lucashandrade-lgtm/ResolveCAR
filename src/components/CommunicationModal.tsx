@@ -24,6 +24,7 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [complete, setComplete] = useState(false);
+  const modalRef = useRef<HTMLElement | null>(null);
   const confirmedRef = useRef(false);
   const { addHistory, showToast } = useAppState();
 
@@ -34,6 +35,11 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
       confirmedRef.current = false;
       return;
     }
+
+    window.requestAnimationFrame(() => {
+      modalRef.current?.focus();
+      modalRef.current?.scrollIntoView({ block: "center", inline: "center" });
+    });
 
     const timer = window.setInterval(() => {
       setStep((current) => {
@@ -70,8 +76,14 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
   const firstName = property.proprietario.nome.split(" ")[0];
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/40 p-4">
-      <section className="my-auto flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl animate-fade-up">
+    <div className="fixed inset-0 z-50 flex min-h-dvh items-center justify-center overflow-y-auto bg-transparent p-4">
+      <section
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        className="flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-slate-200 animate-fade-up focus:outline-none"
+      >
         <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-gov-text">Enviar Comunicacao ao Produtor</h2>
@@ -109,9 +121,9 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-slate-800">{channel.key}</p>
-                        <p className="text-xs text-slate-500">{sent ? (read ? "Entregue" : "Enviando...") : "Aguardando"}</p>
+                        <p className="text-xs text-slate-500">{sent ? (read ? "Entregue" : "Pendente") : "Pendente"}</p>
                       </div>
-                      {read ? <Badge value={channel.key === "WhatsApp" ? "Lido" : channel.key === "Portal ResolveCAR" ? "Disponivel" : "Entregue"} /> : <span className="h-8 w-20 rounded-full skeleton" />}
+                      {read ? <Badge value="Entregue" /> : <Badge value="Pendente" />}
                     </div>
                   );
                 })}

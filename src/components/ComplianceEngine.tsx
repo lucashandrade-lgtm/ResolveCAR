@@ -44,7 +44,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
         </div>
       </div>
 
-      <div className="grid gap-5 p-5 lg:grid-cols-[0.9fr_1.4fr]">
+      <div className="grid gap-5 p-5">
         <div className="rounded-lg border border-slate-200 bg-gov-gray p-4">
           <p className="mb-3 text-xs font-semibold uppercase text-slate-500">Execucao simulada</p>
           <div className="mb-5 space-y-2">

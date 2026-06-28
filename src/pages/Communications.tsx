@@ -38,7 +38,7 @@ export function Communications() {
                   <p className="text-sm text-slate-500">{property.proprietario.nome} - {property.municipio}/{property.uf}</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge value={communication.status.includes("concluido") ? "Conforme" : communication.status.includes("Pendente") ? "Aguardando" : "Entregue"} />
+                  <Badge value={communication.status.includes("Pendente") ? "Pendente" : "Entregue"} />
                   <span className="inline-flex items-center gap-2 text-sm text-slate-500">
                     <Clock3 size={16} /> {communication.data} as {communication.hora}
                   </span>
@@ -49,6 +49,7 @@ export function Communications() {
                 <div className="relative grid gap-4 md:grid-cols-4">
                   {communication.eventos.map((event, index) => {
                     const Icon = icons[event.canal] ?? CheckCircle2;
+                    const status = normalizeMessageStatus(event.status);
                     return (
                       <div key={`${communication.protocolo}-${event.canal}`} className="relative rounded-lg border border-slate-200 bg-white p-4">
                         {index < communication.eventos.length - 1 ? <span className="absolute left-full top-8 hidden h-px w-4 bg-slate-200 md:block" /> : null}
@@ -58,7 +59,7 @@ export function Communications() {
                         <h3 className="font-semibold text-slate-800">{event.canal}</h3>
                         <div className="mt-2 flex items-center gap-2">
                           <CheckCircle2 className="text-gov-green" size={16} />
-                          <Badge value={event.status} />
+                          <Badge value={status} />
                         </div>
                         <p className="mt-2 text-xs text-slate-500">Hora {event.hora}</p>
                       </div>
@@ -80,4 +81,10 @@ export function Communications() {
       </div>
     </Layout>
   );
+}
+
+function normalizeMessageStatus(status: string) {
+  if (status === "Nao encontrado") return "Nao encontrado";
+  if (status === "Pendente" || status === "Agendado" || status === "Aguardando") return "Pendente";
+  return "Entregue";
 }
