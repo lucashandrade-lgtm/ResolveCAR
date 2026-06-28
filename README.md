@@ -6,7 +6,7 @@ Este projeto não possui backend nem banco de dados. Todos os dados são carrega
 
 ## Conceito Central
 
-O princípio fundamental do produto é que o GeoCompliance Engine não toma decisões oficiais.
+O princípio fundamental do produto é que o GeoCompliance Engine (GCE) não toma decisões oficiais.
 
 O motor executa regras ambientais e geoespaciais sobre dados mockados do CAR e produz uma recomendação técnica. A decisão oficial permanece sob responsabilidade da analista ambiental. A interface foi desenhada para reforçar essa separação entre recomendação automatizada e decisão técnica-jurídica humana.
 
@@ -76,7 +76,7 @@ A página de investigação é o espaço principal de análise do processo. Ela 
 - Resumo completo do CAR, com dados gerais, dados do imóvel rural, dados do proprietário e mapa de localização.
 - Visão diagnóstica com tipo de conflito, regras executadas, status e criticidade.
 - Hipóteses técnicas e evidências associadas.
-- Simulação do GeoCompliance Engine.
+- Simulação do GeoCompliance Engine (GCE).
 - Linha do tempo de eventos do processo e do uso do solo.
 - Fluxo de decisão final da analista.
 - Histórico do processo.
