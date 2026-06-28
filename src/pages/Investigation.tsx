@@ -7,11 +7,16 @@ import { Badge } from "../components/Status";
 import { ComplianceEngine } from "../components/ComplianceEngine";
 import { CommunicationModal } from "../components/CommunicationModal";
 import { MockMap } from "../components/MockMap";
-import { getAnalysis, getCase, getRules, sources, timeline } from "../data";
+import { getAnalysis, sources, timeline } from "../data";
+import { useAppState } from "../store/AppState";
+import type { FinalDecisionStatus } from "../types";
 
 export function Investigation() {
   const { id = "" } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
+  const [decisionStatus, setDecisionStatus] = useState<FinalDecisionStatus>("Solicitar Retificacao");
+  const [justification, setJustification] = useState("Parecer sugerido revisado pela analista. A decisao final considera regras aplicadas, evidencias e autonomia tecnica do orgao ambiental.");
+  const { decisions, getCase, getRules, history, updateDecision } = useAppState();
   const property = getCase(id);
 
   if (!property) {
@@ -24,6 +29,9 @@ export function Investigation() {
 
   const analysis = getAnalysis(property.id)!;
   const executedRules = getRules(property.regrasExecutadas);
+  const decision = decisions[property.id];
+  const processHistory = history.filter((item) => item.propertyId === property.id);
+  const canSaveDecision = justification.trim().length >= 80;
 
   return (
     <Layout
@@ -102,15 +110,68 @@ export function Investigation() {
           </Panel>
 
           <Panel title="Tomada de Decisao" icon={<Gavel size={20} />}>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Fact label="Regras executadas" value={property.regrasExecutadas.join(", ")} />
-              <Fact label="Bases utilizadas" value={sources.map((item) => item.nome).join(", ")} />
-              <Fact label="Fundamentacao Juridica" value={analysis.fundamentacaoJuridica} />
-              <Fact label="Recomendacao Tecnica" value={analysis.recomendacaoTecnica} />
+            <div className="mb-5 rounded-lg border border-blue-100 bg-gov-blue-soft p-4 text-sm text-slate-700">
+              O GeoCompliance Engine nao decide. Ele executa regras geoespaciais, registra evidencias e apresenta recomendacao tecnica. A decisao oficial pertence a Luana, analista ambiental responsavel.
             </div>
-            <label className="mt-4 block text-sm font-semibold text-slate-700" htmlFor="parecer">Justificativa da analista</label>
-            <textarea id="parecer" className="mt-2 min-h-28 w-full rounded-md border border-slate-300 p-3 text-sm outline-none focus:border-gov-green focus:ring-2 focus:ring-green-100" defaultValue="Parecer preliminar gerado a partir das evidencias e regras aplicadas. A decisao final permanece sob responsabilidade da analista ambiental." />
-            <button className="btn-primary mt-3" onClick={() => setModalOpen(true)}>Registrar Parecer</button>
+            <div className="grid gap-5 xl:grid-cols-2">
+              <div className="rounded-lg border border-slate-200 bg-gov-gray p-4">
+                <h3 className="font-semibold text-gov-text">Recomendacao do GeoCompliance Engine</h3>
+                <div className="mt-4 grid gap-3">
+                  <Fact label="Resultado das regras" value={property.resultado} />
+                  <Fact label="Criticidade" value={property.criticidade} />
+                  <Fact label="Conflitos" value={property.tipo} />
+                  <Fact label="Fundamentacao" value={analysis.fundamentacaoJuridica} />
+                  <Fact label="Parecer sugerido" value={analysis.recomendacaoTecnica} />
+                </div>
+              </div>
+              <div className="rounded-lg border border-green-100 bg-gov-green-soft p-4">
+                <h3 className="font-semibold text-gov-text">Decisao Final da Analista</h3>
+                <fieldset className="mt-4 space-y-2">
+                  {(["Aprovar Cadastro", "Aprovar com Ressalvas", "Solicitar Retificacao", "Encaminhar para Revisao Tecnica", "Indeferir Cadastro"] as FinalDecisionStatus[]).map((option) => (
+                    <label key={option} className="flex cursor-pointer items-center gap-3 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-slate-200">
+                      <input type="radio" name="decision" value={option} checked={decisionStatus === option} onChange={() => setDecisionStatus(option)} />
+                      {option}
+                    </label>
+                  ))}
+                </fieldset>
+                <label className="mt-4 block text-sm font-semibold text-slate-700" htmlFor="parecer">Justificativa Tecnica obrigatoria</label>
+                <textarea
+                  id="parecer"
+                  className="mt-2 min-h-32 w-full rounded-md border border-slate-300 p-3 text-sm outline-none focus:border-gov-green focus:ring-2 focus:ring-green-100"
+                  value={justification}
+                  onChange={(event) => setJustification(event.target.value)}
+                />
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <span className={canSaveDecision ? "text-gov-green" : "text-gov-red"}>{justification.trim().length}/80 caracteres minimos</span>
+                  <span className="text-slate-500">Responsavel: Luana</span>
+                </div>
+                {decision ? (
+                  <div className="mt-3 rounded-md bg-white p-3 text-sm ring-1 ring-green-100">
+                    <p><strong>Status escolhido:</strong> {decision.status}</p>
+                    <p><strong>Data e hora:</strong> {decision.data} as {decision.hora}</p>
+                  </div>
+                ) : null}
+                <button className="btn-primary mt-3 disabled:cursor-not-allowed disabled:opacity-50" disabled={!canSaveDecision} onClick={() => updateDecision(property.id, decisionStatus, justification)}>
+                  Salvar Decisao
+                </button>
+                <button className="btn-secondary mt-3 ml-2" onClick={() => setModalOpen(true)}>Registrar Parecer e Comunicar</button>
+              </div>
+            </div>
+          </Panel>
+
+          <Panel title="Historico do Processo" icon={<Gavel size={20} />}>
+            <div className="space-y-3">
+              {processHistory.map((item, index) => (
+                <div key={`${item.label}-${index}`} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-3">
+                  <span className="mt-1 h-3 w-3 rounded-full bg-gov-green" />
+                  <div>
+                    <p className="font-semibold text-gov-text">{item.label}</p>
+                    <p className="text-sm text-slate-600">{item.detail}</p>
+                    <p className="mt-1 text-xs text-slate-500">{item.data} as {item.hora}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </Panel>
 
           <Panel title="Comunicacao ao Produtor" icon={<MessageSquareText size={20} />}>

@@ -36,7 +36,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-gov-text">GeoCompliance Engine</h2>
-            <p className="text-sm text-slate-500">{done ? "Validacao concluida" : step < baseSteps.length ? baseSteps[Math.max(0, step - 1)] : "Executando regras..."}</p>
+            <p className="text-sm text-slate-500">{done ? "Recomendacao tecnica gerada" : step < baseSteps.length ? baseSteps[Math.max(0, step - 1)] : "Executando regras..."}</p>
           </div>
           <div className="h-2 w-64 overflow-hidden rounded-full bg-slate-100">
             <div className="h-full rounded-full bg-gov-green transition-all duration-500" style={{ width: `${(step / totalSteps) * 100}%` }} />
@@ -60,7 +60,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
               );
             })}
           </div>
-          <p className="mb-3 text-xs font-semibold uppercase text-slate-500">Fila de regras</p>
+          <p className="mb-3 text-xs font-semibold uppercase text-slate-500">Regras utilizadas nesta analise</p>
           <div className="space-y-2">
             {rules.map((rule, index) => {
               const visible = index < visibleRuleCount;
@@ -73,7 +73,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
                     <CircleDashed className={step >= baseSteps.length ? "animate-spin text-slate-400" : "text-slate-300"} size={19} />
                   )}
                   <span className="font-mono text-sm">{rule.id}</span>
-                  <span className="truncate text-sm text-slate-600">{visible ? rule.nome : "Aguardando validacao"}</span>
+                  <span className="truncate text-sm text-slate-600">{visible ? `${rule.nome} - versao ${rule.versao}` : "Aguardando validacao"}</span>
                 </div>
               );
             })}
@@ -96,7 +96,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
             <div className="rounded-lg border border-green-100 bg-gov-green-soft p-4">
               <div className="mb-3 flex items-center gap-2 text-gov-green">
                 <FileText size={20} />
-                <h3 className="font-semibold">Relatorio de Conformidade Ambiental</h3>
+                <h3 className="font-semibold">Relatorio tecnico de recomendacao</h3>
               </div>
               <dl className="grid gap-3 text-sm sm:grid-cols-2">
                 <Info label="Indice de Convergencia entre Bases" value={`${property.convergencia}%`} />
@@ -104,7 +104,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
                 <Info label="Tempo da analise" value={property.tempoAnalise} />
                 <Info label="Regras executadas" value={String(property.regrasExecutadas.length)} />
                 <Info label="Bases consultadas" value="SICAR, SIGEF, IBGE, MapBiomas, INPE" />
-                <Info label="Resultado" value={property.resultado} />
+                <Info label="Parecer sugerido" value={property.resultado} />
               </dl>
             </div>
           ) : null}
@@ -114,6 +114,7 @@ export function ComplianceEngine({ property, rules }: { property: PropertyCase; 
               <article key={rule.id} className="rounded-lg border border-slate-200 p-4 transition duration-200 hover:border-green-200 hover:shadow-panel">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <strong className="font-mono text-sm text-gov-text">{rule.id}</strong>
+                  <span className="rounded-full bg-slate-100 px-2 py-1 font-mono text-xs text-slate-600" title="Versao da regra usada nesta execucao">v{rule.versao}</span>
                   <Badge value={property.regrasDisparadas.includes(rule.id) ? rule.resultado : "Conforme"} />
                   <Badge value={rule.criticidade} />
                 </div>

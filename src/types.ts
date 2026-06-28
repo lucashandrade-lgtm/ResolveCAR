@@ -1,4 +1,11 @@
 export type Criticidade = "Baixa" | "Media" | "Alta" | "Critica";
+export type RuleStatus = "Ativa" | "Em revisao" | "Desativada" | "Experimental";
+export type FinalDecisionStatus =
+  | "Aprovar Cadastro"
+  | "Aprovar com Ressalvas"
+  | "Solicitar Retificacao"
+  | "Encaminhar para Revisao Tecnica"
+  | "Indeferir Cadastro";
 
 export type PropertyCase = {
   id: string;
@@ -32,6 +39,7 @@ export type PropertyCase = {
 export type Rule = {
   id: string;
   nome: string;
+  categoria?: string;
   descricao: string;
   fundamentacaoLegal: string;
   artigo: string;
@@ -41,6 +49,17 @@ export type Rule = {
   resultado: string;
   mensagemTecnica: string;
   mensagemSimplificada: string;
+  status?: RuleStatus;
+  versao?: string;
+  dataCriacao?: string;
+  ultimaAtualizacao?: string;
+  observacoes?: string;
+  historico?: Array<{
+    versao: string;
+    autor: string;
+    data: string;
+    alteracoes: string;
+  }>;
 };
 
 export type Source = {
@@ -84,4 +103,21 @@ export type Communication = {
   hora: string;
   status: string;
   eventos: CommunicationEvent[];
+};
+
+export type DecisionRecord = {
+  propertyId: string;
+  status: FinalDecisionStatus;
+  justificativa: string;
+  responsavel: string;
+  data: string;
+  hora: string;
+};
+
+export type ProcessHistoryItem = {
+  propertyId: string;
+  label: string;
+  detail: string;
+  data: string;
+  hora: string;
 };

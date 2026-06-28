@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Mail, MessageCircle, MonitorCheck, Smartphone, X } from "lucide-react";
+import { CheckCircle2, Mail, MessageCircle, MonitorCheck, Smartphone } from "lucide-react";
 import { Badge } from "./Status";
 import type { Analysis, PropertyCase } from "../types";
+import { useAppState } from "../store/AppState";
 
 type CommunicationModalProps = {
   open: boolean;
@@ -22,10 +23,15 @@ const channels = [
 export function CommunicationModal({ open, onClose, property, analysis }: CommunicationModalProps) {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const [complete, setComplete] = useState(false);
+  const confirmedRef = useRef(false);
+  const { addHistory, showToast } = useAppState();
 
   useEffect(() => {
     if (!open) {
       setStep(0);
+      setComplete(false);
+      confirmedRef.current = false;
       return;
     }
 
@@ -33,7 +39,7 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
       setStep((current) => {
         if (current >= channels.length * 2) {
           window.clearInterval(timer);
-          window.setTimeout(() => navigate("/comunicacoes"), 600);
+          setComplete(true);
           return current;
         }
         return current + 1;
@@ -41,7 +47,20 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
     }, 560);
 
     return () => window.clearInterval(timer);
-  }, [navigate, open]);
+  }, [open]);
+
+  function confirmCommunication() {
+    if (confirmedRef.current) {
+      return;
+    }
+
+    confirmedRef.current = true;
+    addHistory(property.id, "Comunicacao enviada", "Fluxo SMS, WhatsApp, Email e Portal ResolveCAR concluido.");
+    addHistory(property.id, "Produtor visualizou", "Leitura simulada registrada no canal WhatsApp e Portal.");
+    showToast("Comunicacao confirmada pela Luana e enviada ao produtor.", "success");
+    onClose();
+    navigate("/comunicacoes");
+  }
 
   if (!open) {
     return null;
@@ -51,19 +70,18 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
   const firstName = property.proprietario.nome.split(" ")[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4">
-      <section className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-lg bg-white shadow-2xl animate-fade-up">
+    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/40 p-4">
+      <section className="my-auto flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl animate-fade-up">
         <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-gov-text">Enviar Comunicacao ao Produtor</h2>
-            <p className="text-sm text-slate-500">Fluxo multicanal com rastreabilidade de entrega e leitura.</p>
+            <p className="text-sm text-slate-500">
+              {complete ? "Envio simulado concluido. Confirme para registrar e fechar." : "Fluxo multicanal com rastreabilidade de entrega e leitura."}
+            </p>
           </div>
-          <button className="icon-button" onClick={onClose} aria-label="Fechar modal">
-            <X size={18} />
-          </button>
         </header>
 
-        <div className="grid gap-5 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid flex-1 gap-5 overflow-y-auto p-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-4">
             <div className="rounded-lg border border-slate-200 bg-gov-gray p-4">
               <h3 className="font-semibold text-gov-text">Dados mockados do proprietario</h3>
@@ -127,6 +145,14 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
             </Preview>
           </div>
         </div>
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white px-6 py-4">
+          <p className="text-sm text-slate-500">
+            {complete ? "Todos os canais foram processados. A comunicacao ainda aguarda confirmacao da Luana." : "Aguarde a conclusao dos canais antes de confirmar."}
+          </p>
+          <button className="btn-primary disabled:cursor-not-allowed disabled:opacity-50" disabled={!complete} onClick={confirmCommunication}>
+            Confirmar Envio
+          </button>
+        </footer>
       </section>
     </div>
   );

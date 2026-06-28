@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { BarChart3, Bell, BookOpenCheck, Building2, FileText, Home, MessageSquareText, Search, Settings, ShieldCheck } from "lucide-react";
+import { GlossaryDrawer } from "./GlossaryDrawer";
+import { ToastViewport } from "./ToastViewport";
 
 type LayoutProps = {
   children: ReactNode;
@@ -77,6 +79,8 @@ export function Layout({ children, breadcrumb }: LayoutProps) {
           <div className="animate-fade-up">{children}</div>
         </div>
       </main>
+      <GlossaryDrawer />
+      <ToastViewport />
     </div>
   );
 }

@@ -3,9 +3,10 @@ import type { ReactNode } from "react";
 import { AlertTriangle, CheckCircle2, Clock3, FileSearch, FolderKanban, MapPinned, Send } from "lucide-react";
 import { Layout } from "../components/Layout";
 import { Badge } from "../components/Status";
-import { properties } from "../data";
+import { useAppState } from "../store/AppState";
 
 export function Dashboard() {
+  const { properties } = useAppState();
   const critical = properties.filter((item) => item.criticidade === "Alta" || item.criticidade === "Critica").length;
 
   return (
@@ -16,7 +17,7 @@ export function Dashboard() {
           <div>
             <h1 className="text-2xl font-bold text-gov-text">Fila de validacao ambiental</h1>
             <p className="mt-1 max-w-3xl text-sm text-slate-600">
-              Triagem simulada de Cadastros Ambientais Rurais com evidencias, regras aplicadas e recomendacao tecnica.
+              Triagem simulada de Cadastros Ambientais Rurais com evidencias, regras aplicadas e recomendacao tecnica. A decisao oficial e sempre da analista.
             </p>
           </div>
           <span className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600">Ambiente demonstrativo</span>
@@ -24,7 +25,7 @@ export function Dashboard() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <Metric icon={<FolderKanban size={20} />} label="Processos Pendentes" value="3" tone="green" />
+        <Metric icon={<FolderKanban size={20} />} label="Processos Pendentes" value={String(properties.length)} tone="green" />
         <Metric icon={<AlertTriangle size={20} />} label="Conflitos Criticos" value={String(critical)} tone="red" />
         <Metric icon={<Clock3 size={20} />} label="Tempo Medio de Analise" value="03m 23s" tone="blue" />
         <Metric icon={<Send size={20} />} label="Comunicacoes Enviadas" value="8" tone="cyan" />
