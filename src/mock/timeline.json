@@ -1,0 +1,32 @@
+[
+  {
+    "ano": "2008",
+    "evento": "Marco legal de referencia para area rural consolidada.",
+    "fonte": "Lei Federal 12.651/2012",
+    "imagem": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "ano": "2012",
+    "evento": "Entrada em vigor do novo Codigo Florestal.",
+    "fonte": "Diario Oficial da Uniao",
+    "imagem": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "ano": "2016",
+    "evento": "Primeira classificacao orbital indica consolidacao de uso agropecuario.",
+    "fonte": "MapBiomas Colecao Historica",
+    "imagem": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "ano": "2020",
+    "evento": "Atualizacao do cadastro com novo perimetro do imovel.",
+    "fonte": "SICAR",
+    "imagem": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    "ano": "2024",
+    "evento": "Triagem automatizada cruza bases ambientais e fundiarias.",
+    "fonte": "Motor de Conformidade Ambiental",
+    "imagem": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80"
+  }
+]

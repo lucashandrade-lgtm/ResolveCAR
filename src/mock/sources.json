@@ -1,0 +1,52 @@
+[
+  {
+    "id": "sicar",
+    "nome": "SICAR",
+    "ultimaAtualizacao": "18/06/2026",
+    "escala": "Cadastro declaratorio",
+    "precisao": "Geometria informada pelo declarante",
+    "responsavel": "Servico Florestal Brasileiro",
+    "confiabilidade": "Alta",
+    "coordenadas": [-3.203, -52.206]
+  },
+  {
+    "id": "sigef",
+    "nome": "SIGEF",
+    "ultimaAtualizacao": "10/06/2026",
+    "escala": "1:25.000",
+    "precisao": "Posicional certificada",
+    "responsavel": "INCRA",
+    "confiabilidade": "Alta",
+    "coordenadas": [-10.813, -55.458]
+  },
+  {
+    "id": "ibge",
+    "nome": "IBGE",
+    "ultimaAtualizacao": "02/05/2026",
+    "escala": "1:250.000",
+    "precisao": "Limites territoriais oficiais",
+    "responsavel": "IBGE",
+    "confiabilidade": "Media",
+    "coordenadas": [-5.526, -47.477]
+  },
+  {
+    "id": "mapbiomas",
+    "nome": "MapBiomas",
+    "ultimaAtualizacao": "22/04/2026",
+    "escala": "30 m",
+    "precisao": "Classificacao orbital anual",
+    "responsavel": "Rede MapBiomas",
+    "confiabilidade": "Alta",
+    "coordenadas": [-6.2, -51.3]
+  },
+  {
+    "id": "inpe",
+    "nome": "INPE",
+    "ultimaAtualizacao": "25/06/2026",
+    "escala": "Alertas por imagem orbital",
+    "precisao": "Deteccao de supressao recente",
+    "responsavel": "INPE",
+    "confiabilidade": "Alta",
+    "coordenadas": [-7.1, -50.8]
+  }
+]

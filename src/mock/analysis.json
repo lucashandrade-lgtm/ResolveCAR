@@ -1,0 +1,41 @@
+[
+  {
+    "propertyId": "car-pa-000184",
+    "hipoteses": [
+      "Percentual de Reserva Legal foi declarado com parametro de Cerrado, nao de floresta amazonica.",
+      "Area de Reserva Legal pode ter sido informada parcialmente em outro modulo do cadastro.",
+      "Necessaria conferencia documental antes de recomendacao definitiva."
+    ],
+    "fundamentacaoJuridica": "Lei Federal 12.651/2012, Art. 12, inciso I, alinea a; Decreto 7.830/2012, Art. 5.",
+    "recomendacaoTecnica": "Solicitar retificacao do percentual e da geometria de Reserva Legal, mantendo decisao final sob responsabilidade da analista.",
+    "comunicacaoTecnica": "Foi identificada inconformidade no percentual de Reserva Legal declarado para imovel situado em area de floresta da Amazonia Legal.",
+    "comunicacaoSimplificada": "A reserva informada no cadastro parece menor do que a exigida para essa regiao. Revise os dados e envie a correcao.",
+    "checklist": ["Revisar percentual de Reserva Legal", "Anexar memoria de calculo", "Confirmar bioma predominante", "Atualizar geometria no SICAR"]
+  },
+  {
+    "propertyId": "car-mt-000092",
+    "hipoteses": [
+      "Largura do curso d'agua foi informada corretamente, mas faixa de APP foi desenhada abaixo do minimo.",
+      "Trecho pode ter sido classificado como drenagem intermitente pelo declarante.",
+      "Conferencia visual deve validar hidrografia antes da notificacao."
+    ],
+    "fundamentacaoJuridica": "Lei Federal 12.651/2012, Art. 4, inciso I, alinea a.",
+    "recomendacaoTecnica": "Recomendar retificacao da faixa de APP para 30 metros nos trechos de curso d'agua natural.",
+    "comunicacaoTecnica": "A APP declarada para curso d'agua com largura inferior a 10 metros esta abaixo da faixa minima de 30 metros.",
+    "comunicacaoSimplificada": "A protecao ao redor do rio precisa ser ampliada no cadastro.",
+    "checklist": ["Confirmar largura media do rio", "Ajustar APP para 30 metros", "Reenviar poligono corrigido", "Anexar justificativa se houver divergencia"]
+  },
+  {
+    "propertyId": "car-ma-000317",
+    "hipoteses": [
+      "Alertas orbitais indicam perda de vegetacao nativa posterior ao marco legal.",
+      "A area pode ter autorizacao ambiental nao vinculada ao cadastro.",
+      "O caso exige analise humana antes de qualquer encaminhamento conclusivo."
+    ],
+    "fundamentacaoJuridica": "Lei Federal 12.651/2012, Art. 7, Art. 17 e Art. 61-A.",
+    "recomendacaoTecnica": "Manter caso em conflito critico e solicitar documentos de autorizacao, compensacao ou regularizacao ambiental.",
+    "comunicacaoTecnica": "Foi detectado indicio de supressao de vegetacao nativa posterior a 22/07/2008 em area do imovel.",
+    "comunicacaoSimplificada": "Ha sinal de desmatamento depois da data de referencia. Envie documentos que expliquem ou regularizem essa area.",
+    "checklist": ["Verificar autorizacao de supressao", "Conferir alertas INPE", "Comparar serie MapBiomas", "Registrar parecer humano"]
+  }
+]

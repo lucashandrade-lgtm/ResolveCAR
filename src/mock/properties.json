@@ -1,0 +1,101 @@
+[
+  {
+    "id": "car-pa-000184",
+    "numero": "PA-1500602-3A7F.184",
+    "produtor": "Fazenda Boa Esperanca",
+    "proprietario": {
+      "nome": "Raimundo Alves Pereira",
+      "cpf": "123.456.789-09",
+      "telefone": "(93) 99912-4501",
+      "whatsapp": "(93) 99912-4501",
+      "email": "raimundo.pereira@email.com",
+      "canalPreferencial": "WhatsApp"
+    },
+    "municipio": "Altamira",
+    "uf": "Para",
+    "tipo": "Reserva Legal insuficiente",
+    "criticidade": "Alta",
+    "status": "Nao Conforme",
+    "resultado": "Nao Conforme",
+    "areaTotal": "2.480,40 ha",
+    "areaAfetada": "1.488,24 ha",
+    "resumo": "Area localizada em floresta da Amazonia Legal com reserva declarada inferior ao minimo legal.",
+    "detalhes": {
+      "reservaDeclarada": "20%",
+      "reservaMinima": "80%",
+      "bioma": "Amazonia",
+      "baseTerritorial": "Amazonia Legal"
+    },
+    "regrasDisparadas": ["RL001"],
+    "regrasExecutadas": ["RL001", "RL002", "APP001", "MT001", "TOP002"],
+    "coordenadas": [-3.203, -52.206],
+    "convergencia": 62,
+    "tempoAnalise": "03 min 18 s"
+  },
+  {
+    "id": "car-mt-000092",
+    "numero": "MT-5103403-1C2B.092",
+    "produtor": "Sitio Sao Jose",
+    "proprietario": {
+      "nome": "Jose Carlos Martins",
+      "cpf": "234.567.890-12",
+      "telefone": "(66) 99877-3010",
+      "whatsapp": "(66) 99877-3010",
+      "email": "jose.martins@email.com",
+      "canalPreferencial": "Email"
+    },
+    "municipio": "Colider",
+    "uf": "Mato Grosso",
+    "tipo": "APP divergente",
+    "criticidade": "Media",
+    "status": "Necessita retificacao",
+    "resultado": "Necessita retificacao",
+    "areaTotal": "142,80 ha",
+    "areaAfetada": "4,62 ha",
+    "resumo": "Curso d'agua informado com 8 metros exige APP minima de 30 metros, superior a faixa declarada.",
+    "detalhes": {
+      "rio": "8 metros",
+      "appDeclarada": "15 metros",
+      "appMinima": "30 metros",
+      "bioma": "Amazonia/Cerrado"
+    },
+    "regrasDisparadas": ["APP001"],
+    "regrasExecutadas": ["RL001", "APP001", "APP002", "MT001", "TOP001"],
+    "coordenadas": [-10.813, -55.458],
+    "convergencia": 78,
+    "tempoAnalise": "02 min 41 s"
+  },
+  {
+    "id": "car-ma-000317",
+    "numero": "MA-2105302-8D9E.317",
+    "produtor": "Fazenda Primavera",
+    "proprietario": {
+      "nome": "Maria do Socorro Lima",
+      "cpf": "345.678.901-23",
+      "telefone": "(99) 99705-8840",
+      "whatsapp": "(99) 99705-8840",
+      "email": "maria.lima@email.com",
+      "canalPreferencial": "Portal ResolveCAR"
+    },
+    "municipio": "Imperatriz",
+    "uf": "Maranhao",
+    "tipo": "Desmatamento apos 22/07/2008",
+    "criticidade": "Critica",
+    "status": "Conflito Critico",
+    "resultado": "Conflito Critico",
+    "areaTotal": "836,15 ha",
+    "areaAfetada": "73,20 ha",
+    "resumo": "Indicio de supressao posterior ao marco legal exige verificacao documental por analista.",
+    "detalhes": {
+      "marcoLegal": "22/07/2008",
+      "periodoDetectado": "2016-2020",
+      "classe": "Vegetacao nativa suprimida",
+      "bioma": "Cerrado"
+    },
+    "regrasDisparadas": ["MT002"],
+    "regrasExecutadas": ["RL003", "APP003", "MT001", "MT002", "TOP003"],
+    "coordenadas": [-5.526, -47.477],
+    "convergencia": 54,
+    "tempoAnalise": "04 min 09 s"
+  }
+]
