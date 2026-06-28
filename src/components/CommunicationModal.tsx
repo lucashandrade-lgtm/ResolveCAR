@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Mail, MessageCircle, MonitorCheck, Smartphone } from "lucide-react";
+import { CheckCircle2, Mail, MessageCircle, Smartphone } from "lucide-react";
 import { Badge } from "./Status";
 import type { Analysis, PropertyCase } from "../types";
 import { useAppState } from "../store/AppState";
@@ -17,7 +17,6 @@ const channels = [
   { key: "SMS", icon: Smartphone },
   { key: "WhatsApp", icon: MessageCircle },
   { key: "Email", icon: Mail },
-  { key: "Portal ResolveCAR", icon: MonitorCheck }
 ];
 
 export function CommunicationModal({ open, onClose, property, analysis }: CommunicationModalProps) {
@@ -61,8 +60,8 @@ export function CommunicationModal({ open, onClose, property, analysis }: Commun
     }
 
     confirmedRef.current = true;
-    addHistory(property.id, "Comunicacao enviada", "Fluxo SMS, WhatsApp, Email e Portal ResolveCAR concluido.");
-    addHistory(property.id, "Produtor visualizou", "Leitura simulada registrada no canal WhatsApp e Portal.");
+    addHistory(property.id, "Comunicacao enviada", "Fluxo SMS, WhatsApp e Email concluido.");
+    addHistory(property.id, "Produtor visualizou", "Entrega simulada registrada nos canais disponiveis.");
     showToast("Comunicacao confirmada pela Luana e enviada ao produtor.", "success");
     onClose();
     navigate("/comunicacoes");

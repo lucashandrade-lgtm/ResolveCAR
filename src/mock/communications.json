@@ -8,8 +8,7 @@
     "eventos": [
       { "canal": "SMS", "status": "Entregue", "hora": "09:42" },
       { "canal": "WhatsApp", "status": "Entregue", "hora": "09:43" },
-      { "canal": "Email", "status": "Entregue", "hora": "09:44" },
-      { "canal": "Portal", "status": "Entregue", "hora": "09:45" }
+      { "canal": "Email", "status": "Entregue", "hora": "09:44" }
     ]
   },
   {
@@ -21,8 +20,7 @@
     "eventos": [
       { "canal": "SMS", "status": "Entregue", "hora": "10:18" },
       { "canal": "WhatsApp", "status": "Entregue", "hora": "10:19" },
-      { "canal": "Email", "status": "Entregue", "hora": "10:20" },
-      { "canal": "Portal", "status": "Entregue", "hora": "10:21" }
+      { "canal": "Email", "status": "Entregue", "hora": "10:20" }
     ]
   },
   {
@@ -34,8 +32,7 @@
     "eventos": [
       { "canal": "SMS", "status": "Pendente", "hora": "11:05" },
       { "canal": "WhatsApp", "status": "Pendente", "hora": "11:06" },
-      { "canal": "Email", "status": "Pendente", "hora": "11:07" },
-      { "canal": "Portal", "status": "Nao encontrado", "hora": "11:08" }
+      { "canal": "Email", "status": "Pendente", "hora": "11:07" }
     ]
   }
 ]

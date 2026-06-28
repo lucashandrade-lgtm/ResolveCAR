@@ -14,10 +14,41 @@ export type PropertyCase = {
   proprietario: {
     nome: string;
     cpf: string;
+    tipo?: string;
     telefone: string;
+    celular?: string;
     whatsapp: string;
     email: string;
     canalPreferencial: string;
+    endereco?: string;
+    municipio?: string;
+    estado?: string;
+    cep?: string;
+  };
+  car?: {
+    situacao: string;
+    statusAnalise: string;
+    versao: string;
+    dataInscricao: string;
+    ultimaAtualizacao: string;
+    orgaoResponsavel: string;
+    bioma: string;
+    baciaHidrografica: string;
+    microbacia: string;
+    codigoInterno: string;
+  };
+  imovel?: {
+    nome: string;
+    areaConsolidada: string;
+    areaAgricola: string;
+    areaPastagem: string;
+    areaVegetacaoNativa: string;
+    areaReservaLegal: string;
+    areaApp: string;
+    areaUsoRestrito: string;
+    latitude: string;
+    longitude: string;
+    centroide: string;
   };
   municipio: string;
   uf: string;

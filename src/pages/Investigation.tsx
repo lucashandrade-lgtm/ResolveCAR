@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { ArrowLeft, ClipboardCheck, Database, FileWarning, Gavel, Layers3, Map, MessageSquareText } from "lucide-react";
+import { ArrowLeft, ChevronDown, ClipboardCheck, Database, FileWarning, Gavel, Layers3, Map, MessageSquareText } from "lucide-react";
 import { Layout } from "../components/Layout";
 import { Badge } from "../components/Status";
 import { ComplianceEngine } from "../components/ComplianceEngine";
@@ -61,15 +61,65 @@ export function Investigation() {
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-6">
           <Panel title="Resumo" icon={<ClipboardCheck size={20} />}>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <Fact label="Municipio" value={`${property.municipio} - ${property.uf}`} />
-              <Fact label="Area total" value={property.areaTotal} />
-              <Fact label="Area afetada" value={property.areaAfetada} />
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {Object.entries(property.detalhes).map(([key, value]) => (
-                <Fact key={key} label={formatLabel(key)} value={value} />
-              ))}
+            <div className="space-y-6">
+              <SummaryGroup title="Dados Gerais">
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  <Fact label="Numero do CAR" value={property.numero} />
+                  <Fact label="Situacao" value={property.car?.situacao ?? property.status} />
+                  <Fact label="Status da analise" value={property.car?.statusAnalise ?? property.resultado} />
+                  <Fact label="Versao" value={property.car?.versao ?? "1.0"} />
+                  <Fact label="Data da inscricao" value={property.car?.dataInscricao ?? "Nao informado"} />
+                  <Fact label="Ultima atualizacao" value={property.car?.ultimaAtualizacao ?? "Nao informado"} />
+                  <Fact label="Orgao responsavel" value={property.car?.orgaoResponsavel ?? "Orgao Ambiental Estadual"} />
+                  <Fact label="Municipio" value={property.municipio} />
+                  <Fact label="Estado" value={property.uf} />
+                  <Fact label="Bioma" value={property.car?.bioma ?? property.detalhes.bioma ?? "Nao informado"} />
+                  <Fact label="Bacia Hidrografica" value={property.car?.baciaHidrografica ?? "Nao informado"} />
+                  <Fact label="Microbacia" value={property.car?.microbacia ?? "Nao informado"} />
+                  <Fact label="Codigo interno" value={property.car?.codigoInterno ?? property.id} />
+                  <Fact label="Area Total" value={property.areaTotal} />
+                </div>
+                <div className="mt-3">
+                  <MockMap center={property.coordenadas} title="Mapa de localizacao do CAR" />
+                </div>
+              </SummaryGroup>
+
+              <SummaryGroup title="Imovel Rural">
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  <Fact label="Nome do imovel" value={property.imovel?.nome ?? property.produtor} />
+                  <Fact label="Municipio" value={property.municipio} />
+                  <Fact label="Estado" value={property.uf} />
+                  <Fact label="Area Total" value={property.areaTotal} />
+                  <Fact label="Area Consolidada" value={property.imovel?.areaConsolidada ?? "Nao informado"} />
+                  <Fact label="Area Agricola" value={property.imovel?.areaAgricola ?? "Nao informado"} />
+                  <Fact label="Area de Pastagem" value={property.imovel?.areaPastagem ?? "Nao informado"} />
+                  <Fact label="Area de Vegetacao Nativa" value={property.imovel?.areaVegetacaoNativa ?? "Nao informado"} />
+                  <Fact label="Area de Reserva Legal" value={property.imovel?.areaReservaLegal ?? property.detalhes.reservaDeclarada ?? "Nao informado"} />
+                  <Fact label="Area de APP" value={property.imovel?.areaApp ?? property.detalhes.appDeclarada ?? "Nao informado"} />
+                  <Fact label="Area de Uso Restrito" value={property.imovel?.areaUsoRestrito ?? "Nao informado"} />
+                  <Fact label="Latitude" value={property.imovel?.latitude ?? String(property.coordenadas[0])} />
+                  <Fact label="Longitude" value={property.imovel?.longitude ?? String(property.coordenadas[1])} />
+                  <Fact label="Centroide" value={property.imovel?.centroide ?? `${property.coordenadas[0]}, ${property.coordenadas[1]}`} />
+                </div>
+              </SummaryGroup>
+
+              <SummaryGroup title="Proprietario">
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  <Fact label="Nome" value={property.proprietario.nome} />
+                  <Fact label="CPF mascarado" value={maskCpf(property.proprietario.cpf)} />
+                  <Fact label="Tipo" value={property.proprietario.tipo ?? "Pessoa Fisica"} />
+                  <Fact label="Pessoa Fisica" value="Sim" />
+                  <Fact label="Telefone" value={property.proprietario.telefone} />
+                  <Fact label="Celular" value={property.proprietario.celular ?? property.proprietario.telefone} />
+                  <Fact label="WhatsApp" value={property.proprietario.whatsapp} />
+                  <Fact label="Email" value={property.proprietario.email} />
+                  <Fact label="Canal preferencial de comunicacao" value={property.proprietario.canalPreferencial} />
+                  <Fact label="Endereco" value={property.proprietario.endereco ?? "Nao informado"} />
+                  <Fact label="Municipio" value={property.proprietario.municipio ?? property.municipio} />
+                  <Fact label="Estado" value={property.proprietario.estado ?? property.uf} />
+                  <Fact label="CEP" value={property.proprietario.cep ?? "Nao informado"} />
+                </div>
+              </SummaryGroup>
             </div>
           </Panel>
 
@@ -94,7 +144,7 @@ export function Investigation() {
 
           <ComplianceEngine property={property} rules={executedRules} />
 
-          <Panel title="Linha do Tempo" icon={<Map size={20} />}>
+          {/* <Panel title="Linha do Tempo" icon={<Map size={20} />}>
             <div className="grid gap-4 md:grid-cols-5">
               {timeline.map((item) => (
                 <article key={item.ano} className="overflow-hidden rounded border border-slate-200 bg-white">
@@ -107,7 +157,7 @@ export function Investigation() {
                 </article>
               ))}
             </div>
-          </Panel>
+          </Panel> */}
 
           <Panel title="Tomada de Decisao" icon={<Gavel size={20} />}>
             <div className="mb-5 rounded-lg border border-blue-100 bg-gov-blue-soft p-4 text-sm text-slate-700">
@@ -246,6 +296,18 @@ function Fact({ label, value }: { label: string; value: string }) {
   );
 }
 
-function formatLabel(value: string) {
-  return value.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
+function SummaryGroup({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <details className="group rounded-lg border border-slate-200 bg-gov-gray" open>
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+        <h3 className="text-sm font-semibold uppercase text-gov-green">{title}</h3>
+        <ChevronDown className="text-slate-500 transition group-open:rotate-180" size={18} />
+      </summary>
+      <div className="border-t border-slate-200 p-4">{children}</div>
+    </details>
+  );
+}
+
+function maskCpf(cpf: string) {
+  return cpf.replace(/^(\d{3})\.(\d{3})\.(\d{3})-(\d{2})$/, "$1.***.***-$4");
 }

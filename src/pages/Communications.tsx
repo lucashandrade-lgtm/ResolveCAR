@@ -1,4 +1,4 @@
-import { CheckCircle2, Clock3, Mail, MessageCircle, MonitorCheck, Smartphone } from "lucide-react";
+import { CheckCircle2, Clock3, Mail, MessageCircle, Smartphone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { Badge } from "../components/Status";
@@ -7,8 +7,7 @@ import { communications, getCase } from "../data";
 const icons: Record<string, typeof Smartphone> = {
   SMS: Smartphone,
   WhatsApp: MessageCircle,
-  Email: Mail,
-  Portal: MonitorCheck
+  Email: Mail
 };
 
 export function Communications() {
@@ -18,7 +17,7 @@ export function Communications() {
         <span className="text-sm font-semibold uppercase tracking-wide text-gov-green">Central de Comunicacao</span>
         <h1 className="mt-1 text-2xl font-bold text-gov-text">Rastreabilidade de envio ao produtor</h1>
         <p className="mt-2 max-w-3xl text-sm text-slate-600">
-          Timeline simulada de notificacoes enviadas por SMS, WhatsApp, Email e Portal ResolveCAR.
+          Timeline simulada de notificacoes enviadas por SMS, WhatsApp e Email.
         </p>
       </section>
 
@@ -46,7 +45,7 @@ export function Communications() {
               </header>
 
               <div className="grid gap-4 p-5 lg:grid-cols-[1fr_280px]">
-                <div className="relative grid gap-4 md:grid-cols-4">
+                <div className="relative grid gap-4 md:grid-cols-3">
                   {communication.eventos.map((event, index) => {
                     const Icon = icons[event.canal] ?? CheckCircle2;
                     const status = normalizeMessageStatus(event.status);
